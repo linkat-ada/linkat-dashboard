@@ -1,0 +1,12 @@
+///REGISTER USER
+export const SIGNUP_NEW_USER = "SIGNUP_NEW_USER";
+
+// AUTH Constants
+export const FETCH_TOKEN = "FETCH_TOKEN";
+export const FETCH_TOKEN_FAILED = "FETCH_TOKEN_FAILED";
+export const TOKEN_REMOVE = "TOKEN_REMOVE";
+export const FETCH_USER = "FETCH_USER";
+
+// App Notification
+export const TOGGLE_NOTIFICATION = "TOGGLE_NOTIFICATION";
+export const TOGGLE_NOTIFICATION_OFF = "TOGGLE_NOTIFICATION_OFF";
