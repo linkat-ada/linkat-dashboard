@@ -10,7 +10,12 @@ import { useContext } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
 import RequireAuth from "./RequireAuth";
 import Signin from "./pages/signin/Signin";
-import Notifications from "./components/notifications/Notifications"
+import Notifications from "./components/notifications/Notifications";
+import ListUsers from "./pages/listusers/ListUsers";
+import SingleUser from "./pages/singleuser/SingleUser"
+import ListAdmins from "./pages/listadmins/ListAdmins"
+import CreateAdmin from "./pages/createadmin/CreateAdmin"
+import LinkTypes from "./pages/linktypes/LinkTypes"
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
@@ -24,20 +29,15 @@ function App() {
             <Route path="/">
               <Route index element={<Home />} />
               <Route path="users">
-                <Route index element={<List />} />
-                <Route path=":userId" element={<Single />} />
-                <Route
-                  path="new"
-                  element={<New inputs={userInputs} title="Add New User" />}
-                />
+                <Route index element={<ListUsers />} />
+                <Route path=":userId" element={<SingleUser />} />
               </Route>
-              <Route path="products">
-                <Route index element={<List />} />
-                <Route path=":productId" element={<Single />} />
-                <Route
-                  path="new"
-                  element={<New inputs={productInputs} title="Add New Product" />}
-                />
+              <Route path="admins">
+                <Route index element={<ListAdmins />} />
+                <Route path="newadmin" element={<CreateAdmin/>}/>
+              </Route>
+              <Route path="linktypes">
+                <Route index element={<LinkTypes />} />
               </Route>
             </Route>
           </Route>

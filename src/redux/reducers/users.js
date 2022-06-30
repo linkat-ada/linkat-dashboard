@@ -3,6 +3,7 @@ import {
   FETCH_TOKEN,
   FETCH_TOKEN_FAILED,
   TOKEN_REMOVE,
+  GET_USERS,
   GET_USERINFO,
   UPDATE_PROFILE,
   UPDATE_PASSWORD,
@@ -10,7 +11,8 @@ import {
   UPDATE_EMAIL,
   UPDATE_PROFILEPIC,
   UPDATE_BGPIC,
-  DELETE_USER
+  DELETE_USER,
+  TOGGLE_ACTIVITY
 } from "../constants";
 
 let initialState = {
@@ -48,6 +50,46 @@ const usersReducer = (state = initialState, action) => {
         data: {
           admin: null,
           token: null
+        },
+        success: false,
+        isAuthenticated: false,
+      };
+      case GET_USERS:
+        console.log("in GET_USERS: success, messages, data: ",success, messages, data)
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          users: data
+        },
+        success: false,
+        isAuthenticated: false,
+      };
+      case TOGGLE_ACTIVITY:
+        console.log("in TOGGLE_ACTIVITY: success, messages, data: ",success, messages, data)
+      return {
+        ...state,
+        success,
+        messages
+      };
+      case GET_USERS:
+        console.log("in GET_USERS: success, messages, data: ",success, messages, data)
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          users: data
+        },
+        success: false,
+        isAuthenticated: false,
+      };
+      case GET_USERS:
+        console.log("in GET_USERS: success, messages, data: ",success, messages, data)
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          users: data
         },
         success: false,
         isAuthenticated: false,
