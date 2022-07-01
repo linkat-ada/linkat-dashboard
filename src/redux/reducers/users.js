@@ -15,31 +15,34 @@ import {
   TOGGLE_ACTIVITY
 } from "../constants";
 
-let initialState = {
-  success: false,
-  data: {
-    token: window.localStorage.getItem("token") || null,
-    admin: JSON.parse(window.localStorage.getItem("admin")) || null
-  },
-  isAuthenticated: false,
+let initialState =
+{
+  data: [],
+  success: false
 };
 
 const usersReducer = (state = initialState, action) => {
   const { success, messages, data } = action?.payload || {};
   switch (action.type) {
-      case GET_USERS:
-        console.log("in GET_USERS: success, messages, data: ",success, messages, data)
+    case GET_USERS:
+      console.log("in GET_USERS: success, messages, data: ", success, messages, data)
       return {
         ...state,
         data: {
           ...state.data,
           users: data
         },
-        success: false,
-        isAuthenticated: false,
+        success: true,
       };
-      case TOGGLE_ACTIVITY:
-        console.log("in TOGGLE_ACTIVITY: success, messages, data: ",success, messages, data)
+    case TOGGLE_ACTIVITY:
+      console.log("in TOGGLE_ACTIVITY: success, messages, data: ", success, messages, data)
+      return {
+        ...state,
+        success,
+        messages
+      };
+    case DELETE_USER:
+      console.log("in TOGGLE_ACTIVITY: success, messages, data: ", success, messages, data)
       return {
         ...state,
         success,
@@ -60,6 +63,8 @@ const usersReducer = (state = initialState, action) => {
     //     ...state,
     //     userInfo: [ ...state.userInfo]
     //   };
+    default:
+      return state;
   }
 };
 

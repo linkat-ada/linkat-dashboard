@@ -3,7 +3,7 @@ import { Link as RouterLink, useLocation, useNavigate } from "react-router-dom";
 // import { Form, FormikProvider, useFormik } from "formik";
 // import * as Yup from "yup";
 import { useSelector, useDispatch } from "react-redux";
-import { signinAction } from "../../redux/actions/users";
+import { signinAction } from "../../redux/actions/auth";
 
 import {
   Box,
@@ -53,6 +53,7 @@ const LoginForm = ({ }) => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    console.log("I AM GOING TO SIGN IN")
     await dispatch(signinAction(userData))
       .then(() => navigate("/"))
       .catch((e) => console.error(e));

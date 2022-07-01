@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import notificationReducer from "./notifications";
+import notificationsReducer from "./notifications";
 import usersReducer from "./users";
 import authReducer from "./auth";
 import adminsReducer from "./admins";
@@ -8,7 +8,7 @@ import superadminsReducer from "./superadmins";
 
 const reducers = combineReducers({
   auth: authReducer,
-  notification: notificationReducer,
+  notification: notificationsReducer,
   users: usersReducer,
   admins: adminsReducer,
   linktypes: linktypesReducer,

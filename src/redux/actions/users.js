@@ -1,7 +1,4 @@
 import {
-  FETCH_TOKEN,
-  FETCH_TOKEN_FAILED,
-  TOKEN_REMOVE,
   GET_USERS,
   TOGGLE_ACTIVITY,
   DELETE_USER
@@ -12,7 +9,7 @@ import { requestApi } from "../../helpers/index.js";
 
 export const getUsersAction = () => async (dispatch) => {
   let data = {
-    url: API_URLS().AUTH.GET_USERS,
+    url: API_URLS().USERS.GET_USERS,
   };
   await requestApi(data).then((res) => {
     dispatch({ type: GET_USERS, payload: res?.data });
@@ -22,7 +19,7 @@ export const getUsersAction = () => async (dispatch) => {
 
 export const toggleActivityAction = (userData) => async (dispatch) => {
   let data = {
-    url: API_URLS(userData.id).AUTH.TOGGLE_ACTIVITY,
+    url: API_URLS(userData.id).USERS.TOGGLE_ACTIVITY,
     method: "PATCH",
     body: {
       ...userData,
@@ -36,7 +33,7 @@ export const toggleActivityAction = (userData) => async (dispatch) => {
 
 export const getUserLinksAction = (userData) => async (dispatch) => {
   // let data = {
-  //   url: API_URLS().AUTH.SIGNIN,
+  //   url: API_URLS().USERS.SIGNIN,
   //   method: "POST",
   //   body: {
   //     ...userData,
@@ -50,7 +47,7 @@ export const getUserLinksAction = (userData) => async (dispatch) => {
 
 export const deleteUserLinkAction = (userData) => async (dispatch) => {
   // let data = {
-  //   url: API_URLS().AUTH.SIGNIN,
+  //   url: API_URLS().USERS.SIGNIN,
   //   method: "POST",
   //   body: {
   //     ...userData,
@@ -64,7 +61,7 @@ export const deleteUserLinkAction = (userData) => async (dispatch) => {
 
 export const deleteUserAction = (userData) => async (dispatch) => {
   let data = {
-    url: API_URLS(userData.id).AUTH.DELETE_USER,
+    url: API_URLS(userData.id).USERS.DELETE_USER,
     method: "DELETE",
     body: {
       ...userData,

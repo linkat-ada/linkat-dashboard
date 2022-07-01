@@ -11,7 +11,7 @@ import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined
 import { Link } from "react-router-dom";
 import { DarkModeContext } from "../../context/darkModeContext";
 import { useContext } from "react";
-import { logoutAction } from "../../redux/actions/users";
+import { logoutAction } from "../../redux/actions/auth";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 

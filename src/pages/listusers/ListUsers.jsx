@@ -20,7 +20,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 const ListUsers = () => {
     const dispatch = useDispatch();
-    const users = useSelector((state) => state.auth.data.users)
+    const users = useSelector((state) => state.users.data.users)
 
     useEffect(() => {
         const fetchUsers = async () => {

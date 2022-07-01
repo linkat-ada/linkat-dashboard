@@ -1,4 +1,5 @@
-const API_ROOT = process.env.API_URL;
+const API_ROOT = process.env.REACT_APP_API_URL;
+console.log("API_URL = ", API_ROOT);
 
 const API_URLS = (extraData) => ({
   // the extraData can be used to send url params and request query data if needed to api.

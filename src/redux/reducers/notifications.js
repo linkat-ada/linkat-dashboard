@@ -6,7 +6,7 @@ const initialState = {
   variant: null,
 };
 
-const notificationReducer = (state = initialState, action) => {
+const notificationsReducer = (state = initialState, action) => {
   switch (action.type) {
     case TOGGLE_NOTIFICATION:
       return {
@@ -25,4 +25,4 @@ const notificationReducer = (state = initialState, action) => {
   }
 };
 
-export default notificationReducer;
+export default notificationsReducer;
