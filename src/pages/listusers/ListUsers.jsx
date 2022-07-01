@@ -18,12 +18,6 @@ import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 
-const roles = {
-    "1": "Superadmin",
-    "2": "Admin",
-    "3": "User"
-}
-
 const ListUsers = () => {
     const dispatch = useDispatch();
     const users = useSelector((state) => state.auth.data.users)
@@ -48,7 +42,6 @@ const ListUsers = () => {
                             <TableRow>
                                 <TableCell >Username</TableCell>
                                 <TableCell align="right">Email</TableCell>
-                                <TableCell align="right">Role</TableCell>
                                 <TableCell align="right">isActive</TableCell>
                             </TableRow>
                         </TableHead>
@@ -59,7 +52,6 @@ const ListUsers = () => {
                                         {user.username}
                                     </TableCell>
                                     <TableCell align="right">{user.email}</TableCell>
-                                    <TableCell align="right">{roles[user.roleId]}</TableCell>
                                     <TableCell align="right">{<Switch defaultChecked={user.isActive} onChange={() => dispatch(toggleActivityAction(user))} />}</TableCell>
                                     <TableCell align="right">
                                         <Button color="error" variant="outlined" startIcon={<DeleteIcon />} onClick={() => dispatch(deleteUserAction(user))}>

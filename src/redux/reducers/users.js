@@ -27,33 +27,6 @@ let initialState = {
 const usersReducer = (state = initialState, action) => {
   const { success, messages, data } = action?.payload || {};
   switch (action.type) {
-    case FETCH_TOKEN:
-      window.localStorage.setItem("token", data?.token);
-      window.localStorage.setItem("admin", JSON.stringify(data?.admin));
-      return {
-        success,
-        messages,
-        data,
-        isAuthenticated: true,
-      };
-    // case SIGNUP_NEW_USER:
-    //   return {
-    //     success,
-    //     data,
-    //     messages, 
-    //   };
-    case FETCH_TOKEN_FAILED:
-      window.localStorage.removeItem("token");
-      window.localStorage.removeItem("admin");
-      return {
-        ...state,
-        data: {
-          admin: null,
-          token: null
-        },
-        success: false,
-        isAuthenticated: false,
-      };
       case GET_USERS:
         console.log("in GET_USERS: success, messages, data: ",success, messages, data)
       return {
@@ -72,28 +45,6 @@ const usersReducer = (state = initialState, action) => {
         success,
         messages
       };
-      case GET_USERS:
-        console.log("in GET_USERS: success, messages, data: ",success, messages, data)
-      return {
-        ...state,
-        data: {
-          ...state.data,
-          users: data
-        },
-        success: false,
-        isAuthenticated: false,
-      };
-      case GET_USERS:
-        console.log("in GET_USERS: success, messages, data: ",success, messages, data)
-      return {
-        ...state,
-        data: {
-          ...state.data,
-          users: data
-        },
-        success: false,
-        isAuthenticated: false,
-      };
     // case GET_USERINFO:
     //   return {
     //     ...state,
@@ -109,20 +60,6 @@ const usersReducer = (state = initialState, action) => {
     //     ...state,
     //     userInfo: [ ...state.userInfo]
     //   };
-    case TOKEN_REMOVE:
-      window.localStorage.removeItem("token");
-      window.localStorage.removeItem("user");
-      return {
-        ...state,
-        data: {
-          token: null,
-          admin: null,
-        },
-        success: true,
-        isAuthenticated: false,
-      };
-    default:
-      return state;
   }
 };
 
