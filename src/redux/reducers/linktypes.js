@@ -1,4 +1,4 @@
-import { GET_LINKTYPES } from "../constants";
+import { ADD_LINKTYPE, EDIT_LINKICON, EDIT_LINKTYPE, GET_LINKTYPES } from "../constants";
 
 
 const initialState = {
@@ -7,7 +7,19 @@ const initialState = {
 
 const linktypesReducer = (state = initialState, action) => {
   switch (action.type) {
-    case GET_LINKTYPES: 
+    case GET_LINKTYPES:
+      return {
+        ...state
+      }
+    case ADD_LINKTYPE:
+      return {
+        ...state
+      }
+    case EDIT_LINKTYPE:
+      return {
+        ...state
+      }
+    case EDIT_LINKICON:
       return {
         ...state
       }

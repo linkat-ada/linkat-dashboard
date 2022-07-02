@@ -1,24 +1,15 @@
 import {
-  SIGNUP_NEW_USER,
-  FETCH_TOKEN,
-  FETCH_TOKEN_FAILED,
-  TOKEN_REMOVE,
   GET_USERS,
-  GET_USERINFO,
-  UPDATE_PROFILE,
-  UPDATE_PASSWORD,
-  UPDATE_USERNAME,
-  UPDATE_EMAIL,
-  UPDATE_PROFILEPIC,
-  UPDATE_BGPIC,
   DELETE_USER,
-  TOGGLE_ACTIVITY
+  TOGGLE_ACTIVITY,
+  GET_USERLINKS,
+  DELETE_LINK
 } from "../constants";
 
-let initialState =
-{
+let initialState = {
   data: [],
-  success: false
+  success: false,
+  messages: ''
 };
 
 const usersReducer = (state = initialState, action) => {
@@ -30,9 +21,10 @@ const usersReducer = (state = initialState, action) => {
         ...state,
         data: {
           ...state.data,
-          users: data
+          ...data
         },
         success: true,
+        messages
       };
     case TOGGLE_ACTIVITY:
       console.log("in TOGGLE_ACTIVITY: success, messages, data: ", success, messages, data)
@@ -42,27 +34,35 @@ const usersReducer = (state = initialState, action) => {
         messages
       };
     case DELETE_USER:
-      console.log("in TOGGLE_ACTIVITY: success, messages, data: ", success, messages, data)
+      console.log("in DELETE_USER: success, messages, data: ", success, messages, data)
       return {
         ...state,
+        data: state.data.filter(d => d.id != data.id),
         success,
         messages
       };
-    // case GET_USERINFO:
-    //   return {
-    //     ...state,
-    //     success: true,
-    //     isAuthenticated: true,
-    //     data : {
-    //       ...data,
-    //       user:JSON.stringify(action?.payload)
-    //     }
-    //   };
-    // case UPDATE_PROFILEPIC:
-    //   return {
-    //     ...state,
-    //     userInfo: [ ...state.userInfo]
-    //   };
+    case GET_USERLINKS:
+      console.log("in GET_USERLINKS: success, messages, data: ", success, messages, data)
+      let tempData = state.data;
+      let userIndex = tempData.findIndex(user => user.id == data.userId);
+      tempData[userIndex].links = data;
+      return {
+        ...state,
+        data: tempData,
+        success,
+        messages
+      }
+    case DELETE_LINK:
+      console.log("in DELETE_LINK: success, messages, data: ", success, messages, data)
+      let tempUsers = state.users;
+      let tempUserIndex = tempUsers.findIndex(user => user.id == data.userId);
+      tempUsers[tempUserIndex].links.filter(link => link.id != data.id)
+      return {
+        ...state,
+        data: tempUsers,
+        success,
+        messages
+      }
     default:
       return state;
   }

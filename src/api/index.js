@@ -17,8 +17,6 @@ const API_URLS = (extraData) => ({
   },
   ADMINS: {
     GET_ADMINS: API_ROOT + "/admins/",
-  },
-  SUPERADMINS: {
     CREATE_ADMIN: API_ROOT + "/superadmins/createadmin",
     DELETE_ADMIN: API_ROOT + "/superadmins/delete/" + extraData,
     CHANGE_ROLE: API_ROOT + "/superadmins/users/" + extraData,
