@@ -9,8 +9,13 @@ import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutline
 import ListOutlinedIcon from "@mui/icons-material/ListOutlined";
 import { DarkModeContext } from "../../context/darkModeContext";
 import { useContext } from "react";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
+  const globalState = useSelector(state => state)
+  const admins = globalState.admins.data;
+  const me = admins.find(admin => admin.id == globalState.auth.data.admin.id)
+  console.log("globalState: ", globalState, "me: ", me)
   const { darkMode, dispatch } = useContext(DarkModeContext);
 
   return (
@@ -41,7 +46,7 @@ const Navbar = () => {
             </div>
 
           }
-          <div className="item">
+          {/* <div className="item">
             <FullscreenExitOutlinedIcon className="icon" />
           </div>
           <div className="item">
@@ -54,10 +59,11 @@ const Navbar = () => {
           </div>
           <div className="item">
             <ListOutlinedIcon className="icon" />
-          </div>
+          </div> */}
           <div className="item">
             <img
-              src="https://images.pexels.com/photos/941693/pexels-photo-941693.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
+              src={me?.usersprofile?.profilePic}
+              // src="https://images.pexels.com/photos/941693/pexels-photo-941693.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
               alt=""
               className="avatar"
             />

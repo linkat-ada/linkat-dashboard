@@ -53,7 +53,7 @@ export const deleteUserLinkAction = (userData) => async (dispatch) => {
   };
   await requestApi(data)
     .then((res) => {
-      dispatch({ type: DELETE_LINK, payload: res?.data });
+      dispatch({ type: DELETE_LINK, payload: {...res?.data, id: userData.id } });
     })
 };
 
@@ -67,6 +67,6 @@ export const deleteUserAction = (userData) => async (dispatch) => {
   };
   await requestApi(data)
     .then((res) => {
-      dispatch({ type: DELETE_USER, payload: res?.data });
+      dispatch({ type: DELETE_USER, payload: { userId: userData.id } });
     })
 };

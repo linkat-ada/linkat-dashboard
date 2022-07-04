@@ -1,14 +1,14 @@
 import {
     GET_ADMINS,
-    CHANGE_ROLE,
     CREATE_ADMIN,
-    DELETE_ADMIN
+    DELETE_ADMIN,
+    DELETE_USER
 } from "../constants";
 import API_URLS from "../../api";
 import { requestApi } from "../../helpers/index.js";
 
 
-export const getAdminsActions = (userData) => async (dispatch) => {
+export const getAdminsAction = (userData) => async (dispatch) => {
     let data = {
         url: API_URLS().ADMINS.GET_ADMINS
     };
@@ -20,7 +20,7 @@ export const getAdminsActions = (userData) => async (dispatch) => {
 
 export const deleteAdminAction = (userData) => async (dispatch) => {
     let data = {
-        url: API_URLS(userData.id).SUPERADMINS.DELETE_ADMIN,
+        url: API_URLS(userData.id).ADMINS.DELETE_ADMIN,
         method: "DELETE",
         body: {
             ...userData,
@@ -28,27 +28,35 @@ export const deleteAdminAction = (userData) => async (dispatch) => {
     };
     await requestApi(data)
         .then((res) => {
-            dispatch({ type: DELETE_ADMIN, payload: res?.data });
+            dispatch({ type: DELETE_ADMIN, payload: {adminId: userData.id } });
         })
 };
 
 export const changeRoleAction = (userData) => async (dispatch) => {
+    console.log("IN CHANGE ROLE ACTION, USERDATA: ", userData)
     let data = {
-        url: API_URLS(userData.id).SUPERADMINS.CHANGE_ROLE,
+        url: API_URLS(userData.user.id).ADMINS.CHANGE_ROLE,
         method: "PATCH",
         body: {
-            ...userData,
+            role: userData.role
         },
     };
     await requestApi(data)
         .then((res) => {
-            dispatch({ type: CHANGE_ROLE, payload: res?.data });
+            if (userData.role == "user")
+                dispatch({ type: DELETE_ADMIN, payload: { adminId: userData.user.id} });
+            else {
+                dispatch({ type: DELETE_USER, payload: { userId: userData.user.id} });
+            }
+        })
+        .catch(e => {
+            console.log("CHANGE ROLE ERROR: ", e)
         })
 };
 
 export const createAdminAction = (userData) => async (dispatch) => {
     let data = {
-        url: API_URLS().SUPERADMINS.CREATE_ADMIN,
+        url: API_URLS().ADMINS.CREATE_ADMIN,
         method: "POST",
         body: {
             ...userData,

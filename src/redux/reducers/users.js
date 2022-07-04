@@ -13,16 +13,15 @@ let initialState = {
 };
 
 const usersReducer = (state = initialState, action) => {
-  const { success, messages, data } = action?.payload || {};
+  const { success, messages, data, userId = null } = action?.payload || {};
   switch (action.type) {
     case GET_USERS:
       console.log("in GET_USERS: success, messages, data: ", success, messages, data)
       return {
         ...state,
-        data: {
-          ...state.data,
+        data: [
           ...data
-        },
+        ],
         success: true,
         messages
       };
@@ -35,9 +34,12 @@ const usersReducer = (state = initialState, action) => {
       };
     case DELETE_USER:
       console.log("in DELETE_USER: success, messages, data: ", success, messages, data)
+      const temp = [...state.data];
+      const index = temp.findIndex(user => user.id == userId);
+      index && temp.splice(index, 1)
       return {
         ...state,
-        data: state.data.filter(d => d.id != data.id),
+        data: temp,
         success,
         messages
       };
