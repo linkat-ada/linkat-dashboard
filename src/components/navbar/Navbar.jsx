@@ -16,17 +16,17 @@ const Navbar = () => {
 
   return (
     <div className="navbar my-0 py-0" style={{}}>
-      <div className="wrapper" style={{position: "relative", top: "-10px"}}>
+      <div className="wrapper" style={{ position: "relative", top: "-10px" }}>
         <div className="search">
           <input type="text" placeholder="Search..." />
           <SearchOutlinedIcon />
         </div>
         <div className="items">
-          <div className="item">
+          <div className="item gap-1">
             <LanguageOutlinedIcon className="icon" />
-            English
+            <span>English</span>
           </div>
-          {darkMode && darkMode ?
+          {/* {darkMode && darkMode ?
             <div className="item">
               <LightModeOutlinedIcon
                 className="icon"
@@ -40,8 +40,7 @@ const Navbar = () => {
                 onClick={() => dispatch({ type: "TOGGLE" })}
               />
             </div>
-
-          }
+          } */}
           <div className="item">
             <img
               src={me?.usersprofile?.profilePic}

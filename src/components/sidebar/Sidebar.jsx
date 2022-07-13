@@ -14,6 +14,8 @@ import { useContext } from "react";
 import { logoutAction } from "../../redux/actions/auth";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import LinkIcon from '@mui/icons-material/Link';
 
 const Sidebar = () => {
   // const { dispatchColor } = useContext(DarkModeContext);
@@ -45,21 +47,21 @@ const Sidebar = () => {
           </Link>
           <Link to="/admins" style={{ textDecoration: "none" }}>
             <li>
-              <PersonOutlineIcon className="icon" />
+              <AdminPanelSettingsIcon className="icon" />
               <span>Admins</span>
             </li>
           </Link>
           <Link to="/linktypes" style={{ textDecoration: "none" }}>
             <li>
-              <PersonOutlineIcon className="icon" />
+              <LinkIcon className="icon" />
               <span>Link Types</span>
             </li>
           </Link>
           <p className="title">ME</p>
-          <li>
+          {/* <li>
             <AccountCircleOutlinedIcon className="icon" />
             <span>Profile</span>
-          </li>
+          </li> */}
           <li
             onClick={async () => {
               await dispatch(logoutAction())
