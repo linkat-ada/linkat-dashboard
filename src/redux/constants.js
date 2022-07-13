@@ -9,6 +9,7 @@ export const TOKEN_REMOVE = "TOKEN_REMOVE";
 //USERS CONSTANTS
 export const TOGGLE_ACTIVITY = "TOGGLE_ACTIVITY";
 export const GET_USERS = "GET_USERS";
+export const GET_USER = "GET_USER"
 export const GET_USERLINKS = "GET_USERLINKS";
 export const DELETE_USER = "DELETE_USER";
 export const DELETE_LINK = "DELETE_LINK";

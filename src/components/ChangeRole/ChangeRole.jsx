@@ -9,7 +9,6 @@ import { useDispatch } from 'react-redux';
 import { changeRoleAction } from '../../redux/actions/admins';
 
 const ChangeRole = ({ user }) => {
-    console.log("user: ",user)
     const roles = {
         "1": "superAdmin",
         "2": "admin",

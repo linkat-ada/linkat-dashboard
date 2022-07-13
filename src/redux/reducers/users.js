@@ -1,5 +1,6 @@
 import {
   GET_USERS,
+  GET_USER,
   DELETE_USER,
   TOGGLE_ACTIVITY,
   GET_USERLINKS,
@@ -25,6 +26,13 @@ const usersReducer = (state = initialState, action) => {
         success: true,
         messages
       };
+    case GET_USER:
+      console.log("in GET_USER: success, messages, data: ", success, messages, data)
+      return {
+        ...state,
+        success: true,
+        messages
+      };
     case TOGGLE_ACTIVITY:
       console.log("in TOGGLE_ACTIVITY: success, messages, data: ", success, messages, data)
       return {
@@ -36,7 +44,7 @@ const usersReducer = (state = initialState, action) => {
       console.log("in DELETE_USER: success, messages, data: ", success, messages, data)
       const temp = [...state.data];
       const index = temp.findIndex(user => user.id == userId);
-      index && temp.splice(index, 1)
+      index >= 0 && temp.splice(index, 1)
       return {
         ...state,
         data: temp,
@@ -45,9 +53,13 @@ const usersReducer = (state = initialState, action) => {
       };
     case GET_USERLINKS:
       console.log("in GET_USERLINKS: success, messages, data: ", success, messages, data)
-      let tempData = state.data;
-      let userIndex = tempData.findIndex(user => user.id == data.userId);
-      tempData[userIndex].links = data;
+      let tempData = [...state.data];
+      console.log("userId: ", userId);
+      let userIndex = tempData.findIndex(user => user.id == userId);
+      console.log("userIndex is :", userIndex);
+      console.log("data: ", data)
+      console.log("user: ", tempData[userIndex])
+      data ? tempData[userIndex].links = data : tempData[userIndex].links = [];
       return {
         ...state,
         data: tempData,
@@ -56,9 +68,12 @@ const usersReducer = (state = initialState, action) => {
       }
     case DELETE_LINK:
       console.log("in DELETE_LINK: success, messages, data: ", success, messages, data)
-      let tempUsers = state.users;
-      let tempUserIndex = tempUsers.findIndex(user => user.id == data.userId);
-      tempUsers[tempUserIndex].links.filter(link => link.id != data.id)
+      let tempUsers = [...state.data];
+      let tempUserIndex = tempUsers.findIndex(user => user.id == userId);
+      let tempLinks = [...tempUsers[tempUserIndex].links];
+      let tempLinkIndex = tempLinks.findIndex(link => link.id == action.payload.linkId)
+      tempLinkIndex >= 0 && tempLinks.splice(tempLinkIndex, 1)
+      tempUsers[tempUserIndex].links = tempLinks
       return {
         ...state,
         data: tempUsers,

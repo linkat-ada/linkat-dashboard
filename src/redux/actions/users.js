@@ -1,6 +1,7 @@
 import {
   TOGGLE_ACTIVITY,
   GET_USERS,
+  GET_USER,
   GET_USERLINKS,
   DELETE_USER,
   DELETE_LINK
@@ -15,6 +16,18 @@ export const getUsersAction = () => async (dispatch) => {
   };
   await requestApi(data).then((res) => {
     dispatch({ type: GET_USERS, payload: res?.data });
+    return res?.data
+  })
+};
+
+export const getUserAction = (id) => async (dispatch) => {
+  
+  let data = {
+    url: API_URLS(id).USERS.GET_USER,
+  };
+  console.log("data.url: ",data.url)
+  await requestApi(data).then((res) => {
+    dispatch({ type: GET_USER });
     return res?.data
   })
 };
@@ -35,17 +48,17 @@ export const toggleActivityAction = (userData) => async (dispatch) => {
 
 export const getUserLinksAction = (userData) => async (dispatch) => {
   let data = {
-    url: API_URLS().USERS.GET_USERLINKS
+    url: API_URLS(userData.id).USERS.GET_USERLINKS
   };
   await requestApi(data)
     .then((res) => {
-      dispatch({ type: GET_USERLINKS, payload: res?.data });
+      dispatch({ type: GET_USERLINKS, payload: {...res?.data, userId: userData.id}});
     })
 };
 
-export const deleteUserLinkAction = (userData) => async (dispatch) => {
+export const deleteUserLinkAction = (userData, linkData) => async (dispatch) => {
   let data = {
-    url: API_URLS(userData.id).USERS.DELETE_LINK,
+    url: API_URLS(linkData.id).USERS.DELETE_LINK,
     method: "DELETE",
     body: {
       ...userData,
@@ -53,7 +66,7 @@ export const deleteUserLinkAction = (userData) => async (dispatch) => {
   };
   await requestApi(data)
     .then((res) => {
-      dispatch({ type: DELETE_LINK, payload: {...res?.data, id: userData.id } });
+      dispatch({ type: DELETE_LINK, payload: {userId: userData.id, linkId: linkData.id } });
     })
 };
 

@@ -31,9 +31,14 @@ const User = ({ user }) => {
     return (
         <TableRow>
             <TableCell>
-                <Link to={`/users/${user.id}`}>
-                    <img src={user.usersprofile.profilePic} style={{ width: "50px", height: "auto" }} />
-                </Link>
+                {user.roleId === 3 ?
+                    <Link to={`/users/${user.id}`}>
+                        <img src={user?.usersprofile?.profilePic} style={{ width: "4em", height: "auto" }} />
+                    </Link>
+                    :
+                    <img src={user?.usersprofile?.profilePic} style={{ width: "4em", height: "auto" }} />
+
+                }
             </TableCell>
             <TableCell component="th" scope="row">
                 {user.username}
@@ -43,14 +48,9 @@ const User = ({ user }) => {
             <TableCell align="right">{<Switch defaultChecked={user.isActive} onChange={() => dispatch(toggleActivityAction(user))} />}</TableCell>
 
             <TableCell align="right">
-                {/* {!loading ? */}
                 <Button color="error" variant="outlined" startIcon={<DeleteIcon />} onClick={() => dispatchDeleteUser(user)}>
                     Delete
                 </Button>
-                {/* :
-                    <LoadingButton loading variant="outlined">
-                        Submit
-                    </LoadingButton>} */}
 
             </TableCell>
         </TableRow >

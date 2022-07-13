@@ -9,10 +9,12 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUsersAction } from '../../redux/actions/users';
 import User from '../../components/user/User';
+import Grid from "@mui/material/Grid";
+import Card from "@mui/material/Card";
 
 
 const ListUsers = () => {
@@ -33,7 +35,26 @@ const ListUsers = () => {
             <Sidebar />
             <div className="listContainer">
                 <Navbar />
-                <Typography align='center' gutterBottom>All Users</Typography>
+                <Box sx={{
+                    backgroundColor: "#2196f3",
+                    marginTop: "-3",
+                    borderRadius: "10px",
+                }}
+                    mx={5}
+                    mt={-3}
+                    py={3}
+                    px={2}
+                >
+                    <Typography
+                        sx={{ flex: '1 1 100%' }}
+                        variant="h6"
+                        id="tableTitle"
+                        component="div"
+                        color="white"
+                    >
+                        Users
+                    </Typography>
+                </Box>
                 <TableContainer component={Paper}>
                     <Table aria-label="Users table" stickyHeader sx={{ width: "60em", margin: "auto" }}>
                         <TableHead>
@@ -41,12 +62,11 @@ const ListUsers = () => {
                                 <TableCell ></TableCell>
                                 <TableCell >Username</TableCell>
                                 <TableCell align="right">Email</TableCell>
-                                <TableCell align="right">isActive</TableCell>
                                 <TableCell align="right">Role</TableCell>
+                                <TableCell align="right">isActive</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {/* {console.log(users)} */}
                             {users && users.length ? users.map((user, index) => (
                                 <User user={user} key={index} />
                             ))

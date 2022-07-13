@@ -11,6 +11,7 @@ const API_URLS = (extraData) => ({
   USERS: {
     TOGGLE_ACTIVITY: API_ROOT + "/admins/activity/" + extraData,
     GET_USERS: API_ROOT + "/admins/users/",
+    GET_USER: API_ROOT + "/admins/users/" + extraData,
     GET_USERLINKS: API_ROOT + "/admins/users/" + extraData + "/links", //get all links from user
     DELETE_USER: API_ROOT + "/admins/users/" + extraData,
     DELETE_LINK: API_ROOT + "/admins/links/" + extraData,

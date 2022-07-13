@@ -8,7 +8,7 @@ import API_URLS from "../../api";
 import { requestApi } from "../../helpers/index.js";
 
 
-export const getLinkTypesAction = (userData) => async (dispatch) => {
+export const getLinkTypesAction = () => async (dispatch) => {
     let data = {
         url: API_URLS().LINKTYPES.GET_LINKTYPES
     };
@@ -18,44 +18,41 @@ export const getLinkTypesAction = (userData) => async (dispatch) => {
         })
 };
 
-export const addLinkTypeAction = (userData) => async (dispatch) => {
+export const addLinkTypeAction = (type) => async (dispatch) => {
     let data = {
         url: API_URLS().LINKTYPES.ADD_LINKTYPE,
         method: "POST",
-        body: {
-            ...userData,
-        },
+        body: { type },
     };
     await requestApi(data)
         .then((res) => {
-            dispatch({ type: ADD_LINKTYPE, payload: res?.data });
+            dispatch({ type: ADD_LINKTYPE, payload: type });
         })
 };
 
-export const editLinkTypeAction = (userData) => async (dispatch) => {
+export const editLinkTypeAction = (linktype, type) => async (dispatch) => {
     let data = {
-        url: API_URLS(userData.id).LINKTYPES.EDIT_LINKTYPE,
+        url: API_URLS(linktype.id).LINKTYPES.EDIT_LINKTYPE,
         method: "PATCH",
         body: {
-            ...userData,
+            type
         },
     };
     await requestApi(data)
         .then((res) => {
-            dispatch({ type: EDIT_LINKTYPE, payload: res?.data });
+            dispatch({ type: EDIT_LINKTYPE, payload: linktype, type });
         })
 };
 
-export const editLinkIconAction = (userData) => async (dispatch) => {
+export const editLinkIconAction = (linktype, formData) => async (dispatch) => {
     let data = {
-        url: API_URLS(userData.id).LINKTYPES.EDIT_LINKICON,
+        url: API_URLS(linktype.id).LINKTYPES.EDIT_LINKICON,
         method: "PATCH",
-        body: {
-            ...userData,
-        },
+        body: formData,
+        contentType: "multipart/form-data",
     };
     await requestApi(data)
         .then((res) => {
-            dispatch({ type: EDIT_LINKICON, payload: res?.data });
+            dispatch({ type: EDIT_LINKICON, payload: linktype });
         })
 };

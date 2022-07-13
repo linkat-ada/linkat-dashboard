@@ -14,7 +14,6 @@ import Notifications from "./components/notifications/Notifications";
 import ListUsers from "./pages/listusers/ListUsers";
 import SingleUser from "./pages/singleuser/SingleUser"
 import ListAdmins from "./pages/listadmins/ListAdmins"
-import CreateAdmin from "./pages/createadmin/CreateAdmin"
 import LinkTypes from "./pages/linktypes/LinkTypes"
 
 function App() {
@@ -34,7 +33,6 @@ function App() {
               </Route>
               <Route path="admins">
                 <Route index element={<ListAdmins />} />
-                <Route path="newadmin" element={<CreateAdmin/>}/>
               </Route>
               <Route path="linktypes">
                 <Route index element={<LinkTypes />} />

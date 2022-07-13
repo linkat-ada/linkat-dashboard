@@ -64,6 +64,6 @@ export const createAdminAction = (userData) => async (dispatch) => {
     };
     await requestApi(data)
         .then((res) => {
-            dispatch({ type: CREATE_ADMIN, payload: res?.data });
+            dispatch({ type: CREATE_ADMIN, payload: {...res?.data, username: userData.username, email: userData.email, roleId: 2, isActive: true} });
         })
 };
