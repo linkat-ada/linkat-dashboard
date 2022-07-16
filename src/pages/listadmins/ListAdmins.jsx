@@ -17,7 +17,6 @@ import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Stack } from '@mui/material';
 
@@ -39,6 +38,7 @@ const ListAdmins = () => {
     const handleCreateAdminAction = async (e) => {
         await dispatch(createAdminAction(userData))
             .catch((e) => console.error(e));
+        setOpen(false);
     };
 
     const handleInputChange = (e) => {

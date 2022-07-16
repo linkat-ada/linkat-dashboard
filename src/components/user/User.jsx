@@ -12,20 +12,34 @@ import { deleteUserAction } from '../../redux/actions/users';
 import ChangeRole from '../ChangeRole/ChangeRole';
 import { deleteAdminAction } from '../../redux/actions/admins';
 import { Link } from 'react-router-dom';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import CancelIcon from '@mui/icons-material/Cancel';
+import ButtonGroup from '@mui/material/ButtonGroup';
+import Grid from '@mui/material/Grid';
 
 const User = ({ user }) => {
     const dispatch = useDispatch();
-    const [loading, setLoading] = useState(false);
+    const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     const dispatchDeleteUser = async (user) => {
-        setLoading(true)
         if (user.roleId === 3)
             await dispatch(deleteUserAction(user));
         else {
             await dispatch(deleteAdminAction(user));
-            setLoading(false)
         }
-        setLoading(false)
+        setOpen(false);
     }
 
     return (
@@ -48,9 +62,33 @@ const User = ({ user }) => {
             <TableCell align="right">{<Switch defaultChecked={user.isActive} onChange={() => dispatch(toggleActivityAction(user))} />}</TableCell>
 
             <TableCell align="right">
-                <Button color="error" variant="outlined" startIcon={<DeleteIcon />} onClick={() => dispatchDeleteUser(user)}>
+                <Button color="error" variant="outlined" startIcon={<DeleteIcon />} onClick={handleClickOpen}>
                     Delete
                 </Button>
+                <Dialog
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                >
+                    <DialogTitle id="alert-dialog-title">
+                        {"Are you sure you want to delete this user?"}
+                    </DialogTitle>
+                    {/* <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                            Let Google help apps determine location. This means sending anonymous
+                            location data to Google, even when no apps are running.
+                        </DialogContentText>
+                    </DialogContent> */}
+                    <DialogActions sx={{display: "flex", justifyContent: "center"}}>
+                        <ButtonGroup>
+                            <Button color="error" variant="outlined" startIcon={<DeleteIcon />} onClick={() => dispatchDeleteUser(user)}>Delete</Button>
+                            <Button color="primary" variant="outlined" startIcon={<CancelIcon />} onClick={handleClose} autoFocus>
+                                Cancel
+                            </Button>
+                        </ButtonGroup>
+                    </DialogActions>
+                </Dialog>
 
             </TableCell>
         </TableRow >

@@ -17,6 +17,13 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Box, Typography } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import CancelIcon from '@mui/icons-material/Cancel';
+import ButtonGroup from '@mui/material/ButtonGroup';
 
 
 const roles = {
@@ -30,8 +37,15 @@ const SingleUser = () => {
     const { userId } = useParams();
     const state = useSelector(state => state)
     let user = state.users.data.find(user => user.id == userId) || state.admins.data.find(admin => admin.id == userId);
-    console.log("user: ", user)
-    console.log("USER LINKS: ", user?.links)
+    const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
     useEffect(() => {
         const fetchUsers = async () => {
             await dispatch(getUsersAction())
@@ -40,6 +54,11 @@ const SingleUser = () => {
         }
         fetchUsers();
     }, []);
+
+    const dispatchDeleteUser = async (user) => {
+        await dispatch(deleteUserAction(user));
+        setOpen(false);
+    }
 
     return (
         <div className="list">
@@ -58,7 +77,27 @@ const SingleUser = () => {
                                     <p>Role: {roles[user.roleId]}</p>
                                 </div>
                             </div>
-                            <Button variant="outlined" color="error" startIcon={<DeleteIcon />} onClick={() => dispatch(deleteUserAction(user))}>Delete User</Button>
+                            <Button color="error" variant="outlined" startIcon={<DeleteIcon />} onClick={handleClickOpen}>
+                                Delete
+                            </Button>
+                            <Dialog
+                                open={open}
+                                onClose={handleClose}
+                                aria-labelledby="alert-dialog-title"
+                                aria-describedby="alert-dialog-description"
+                            >
+                                <DialogTitle id="alert-dialog-title">
+                                    {"Are you sure you want to delete this user?"}
+                                </DialogTitle>
+                                <DialogActions sx={{ display: "flex", justifyContent: "center" }}>
+                                    <ButtonGroup>
+                                        <Button color="error" variant="outlined" startIcon={<DeleteIcon />} onClick={() => dispatchDeleteUser(user)}>Delete</Button>
+                                        <Button color="primary" variant="outlined" startIcon={<CancelIcon />} onClick={handleClose} autoFocus>
+                                            Cancel
+                                        </Button>
+                                    </ButtonGroup>
+                                </DialogActions>
+                            </Dialog>
                         </div>
                         <h5 className='text-center'>{user.username}'s links table</h5>
                         <div>

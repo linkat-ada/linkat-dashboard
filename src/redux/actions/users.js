@@ -1,6 +1,7 @@
 import {
   TOGGLE_ACTIVITY,
   GET_USERS,
+  GET_USERSDATES,
   GET_USER,
   GET_USERLINKS,
   DELETE_USER,
@@ -16,6 +17,16 @@ export const getUsersAction = () => async (dispatch) => {
   };
   await requestApi(data).then((res) => {
     dispatch({ type: GET_USERS, payload: res?.data });
+    return res?.data
+  })
+};
+
+export const getUsersDatesAction = () => async (dispatch) => {
+  let data = {
+    url: API_URLS().USERS.GET_USERSDATES,
+  };
+  await requestApi(data).then((res) => {
+    dispatch({ type: GET_USERSDATES, payload: res?.data });
     return res?.data
   })
 };

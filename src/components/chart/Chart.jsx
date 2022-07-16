@@ -7,45 +7,63 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import { getUsersDatesAction } from "../../redux/actions/users";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-const data = [
-  { name: "January", Total: 1200 },
-  { name: "February", Total: 2100 },
-  { name: "March", Total: 800 },
-  { name: "April", Total: 1600 },
-  { name: "May", Total: 900 },
-  { name: "June", Total: 1700 },
-];
+
 
 const Chart = ({ aspect, title }) => {
+  const dispatch = useDispatch();
+  const dates = useSelector(state => state.users.dates);
+  let data = [];
+  dates && dates.map(user => {
+    let date = user.createdAt.split("T")[0];
+    const index = data.findIndex(u => u.name == date)
+    if (index == -1) {
+      data.push({ name: date, Total: 1 })
+    }
+    else data[index].Total++;
+  })
+
+  useEffect(() => {
+    const fetchDates = async () => {
+      await dispatch(getUsersDatesAction())
+    }
+    fetchDates();
+  }, []);
+
+
   return (
     <div className="chart">
       <div className="title">{title}</div>
-      <ResponsiveContainer width="100%" aspect={aspect}>
-        <AreaChart
-          width={730}
-          height={250}
-          data={data}
-          margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
-        >
-          <defs>
-            <linearGradient id="total" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
-              <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
-            </linearGradient>
-          </defs>
-          <XAxis dataKey="name" stroke="gray" />
-          <CartesianGrid strokeDasharray="3 3" className="chartGrid" />
-          <Tooltip />
-          <Area
-            type="monotone"
-            dataKey="Total"
-            stroke="#8884d8"
-            fillOpacity={1}
-            fill="url(#total)"
-          />
-        </AreaChart>
-      </ResponsiveContainer>
+      {dates &&
+        <ResponsiveContainer width="100%" aspect={aspect}>
+          <AreaChart
+            width={730}
+            height={250}
+            data={data}
+            margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+          >
+            <defs>
+              <linearGradient id="total" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
+                <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
+              </linearGradient>
+            </defs>
+            <XAxis dataKey="name" stroke="gray" />
+            <CartesianGrid strokeDasharray="3 3" className="chartGrid" />
+            <Tooltip />
+            <Area
+              type="monotone"
+              dataKey="Total"
+              stroke="#8884d8"
+              fillOpacity={1}
+              fill="url(#total)"
+            />
+          </AreaChart>
+        </ResponsiveContainer>
+      }
     </div>
   );
 };

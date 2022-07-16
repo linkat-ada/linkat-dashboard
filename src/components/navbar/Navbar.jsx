@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 const Navbar = () => {
   const globalState = useSelector(state => state)
   const admins = globalState.admins.data;
-  const me = admins.find(admin => admin.id == globalState.auth.data.admin.id)
+  const me = admins.find(admin => admin?.id == globalState?.auth?.data?.admin?.id)
   console.log("globalState: ", globalState, "me: ", me)
   const { darkMode, dispatch } = useContext(DarkModeContext);
 
@@ -22,10 +22,10 @@ const Navbar = () => {
           <SearchOutlinedIcon />
         </div>
         <div className="items">
-          <div className="item gap-1">
+          {/* <div className="item gap-1">
             <LanguageOutlinedIcon className="icon" />
             <span>English</span>
-          </div>
+          </div> */}
           {/* {darkMode && darkMode ?
             <div className="item">
               <LightModeOutlinedIcon

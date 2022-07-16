@@ -4,7 +4,8 @@ import {
   DELETE_USER,
   TOGGLE_ACTIVITY,
   GET_USERLINKS,
-  DELETE_LINK
+  DELETE_LINK,
+  GET_USERSDATES
 } from "../constants";
 
 let initialState = {
@@ -21,6 +22,16 @@ const usersReducer = (state = initialState, action) => {
       return {
         ...state,
         data: [
+          ...data
+        ],
+        success: true,
+        messages
+      };
+    case GET_USERSDATES:
+      console.log("in GET_USERSDATES: success, messages, data: ", success, messages, data)
+      return {
+        ...state,
+        dates: [
           ...data
         ],
         success: true,
