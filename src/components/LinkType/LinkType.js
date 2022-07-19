@@ -30,18 +30,18 @@ const LinkType = ({ linktype }) => {
                 />
             </TableCell>
             <TableCell align="right">
-                <img src={data.icon} style={{ width: "5em", height: "5em" }} />
+                <img src={data?.icon} style={{ width: "5em", height: "5em" }} />
             </TableCell>
 
             <TableCell align="left">
-                <label class="form-label" for="customFile">Edit Icon</label>
-                <input type="file" class="form-control" id="customFile"
+                <label className="form-label" htmlFor="customFile">Edit Icon</label>
+                <input type="file" className="form-control" id="customFile"
                     onChange={async (e) => {
-                        setData({ ...data, icon: e.target.files[0] })
                         const formData = new FormData();
                         formData.append("file", e.target.files[0]);
                         await dispatch(editLinkIconAction(linktype, formData))
                             .catch((e) => console.error(e));
+                        setData({ ...data, icon: linktype.icon })
                     }} />
 
             </TableCell>

@@ -28,7 +28,7 @@ export const deleteAdminAction = (userData) => async (dispatch) => {
     };
     await requestApi(data)
         .then((res) => {
-            dispatch({ type: DELETE_ADMIN, payload: {adminId: userData.id } });
+            dispatch({ type: DELETE_ADMIN, payload: { adminId: userData.id } });
         })
 };
 
@@ -44,9 +44,9 @@ export const changeRoleAction = (userData) => async (dispatch) => {
     await requestApi(data)
         .then((res) => {
             if (userData.role == "user")
-                dispatch({ type: DELETE_ADMIN, payload: { adminId: userData.user.id} });
+                dispatch({ type: DELETE_ADMIN, payload: { adminId: userData.user.id } });
             else {
-                dispatch({ type: DELETE_USER, payload: { userId: userData.user.id} });
+                dispatch({ type: DELETE_USER, payload: { userId: userData.user.id } });
             }
         })
         .catch(e => {
@@ -64,6 +64,10 @@ export const createAdminAction = (userData) => async (dispatch) => {
     };
     await requestApi(data)
         .then((res) => {
-            dispatch({ type: CREATE_ADMIN, payload: {...res?.data, username: userData.username, email: userData.email, roleId: 2, isActive: true} });
+            dispatch({
+                type: CREATE_ADMIN, payload:
+                    // {...res?.data, username: userData.username, email: userData.email, roleId: 2, isActive: true}
+                    res?.data
+            });
         })
 };

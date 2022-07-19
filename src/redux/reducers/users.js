@@ -27,6 +27,19 @@ const usersReducer = (state = initialState, action) => {
         success: true,
         messages
       };
+    case GET_USER:
+      console.log("in GET_USER: success, messages, data: ", success, messages, data)
+      const tempIndex = state.data.map(user => user.id == data.id)
+      let tempArray = [...state.data];
+      if (tempIndex == -1) {
+        tempArray.push(data)
+      }
+      return {
+        ...state,
+        data: tempArray,
+        success: true,
+        messages
+      };
     case GET_USERSDATES:
       console.log("in GET_USERSDATES: success, messages, data: ", success, messages, data)
       return {
@@ -34,13 +47,6 @@ const usersReducer = (state = initialState, action) => {
         dates: [
           ...data
         ],
-        success: true,
-        messages
-      };
-    case GET_USER:
-      console.log("in GET_USER: success, messages, data: ", success, messages, data)
-      return {
-        ...state,
         success: true,
         messages
       };
@@ -65,12 +71,16 @@ const usersReducer = (state = initialState, action) => {
     case GET_USERLINKS:
       console.log("in GET_USERLINKS: success, messages, data: ", success, messages, data)
       let tempData = [...state.data];
-      console.log("userId: ", userId);
-      let userIndex = tempData.findIndex(user => user.id == userId);
+      let userIndex = tempData.findIndex(user => user?.id == data[0]?.user?.id);
       console.log("userIndex is :", userIndex);
       console.log("data: ", data)
       console.log("user: ", tempData[userIndex])
-      data ? tempData[userIndex].links = data : tempData[userIndex].links = [];
+      if (data && userIndex >= 0) {
+        tempData[userIndex].links = data
+      }
+      else if (userIndex >= 0) {
+        tempData[userIndex].links = []
+      }
       return {
         ...state,
         data: tempData,

@@ -36,8 +36,9 @@ const SingleUser = () => {
     const dispatch = useDispatch();
     const { userId } = useParams();
     const state = useSelector(state => state)
-    let user = state.users.data.find(user => user.id == userId) || state.admins.data.find(admin => admin.id == userId);
-    const [open, setOpen] = React.useState(false);
+    let user = state.users.data.find(user => user.id == userId) || state.admins.data.find(admin => admin.id == userId) || null;
+    console.log("user: ", user)
+    const [open, setOpen] = useState(false);
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -48,9 +49,9 @@ const SingleUser = () => {
     };
     useEffect(() => {
         const fetchUsers = async () => {
-            await dispatch(getUsersAction())
-            await dispatch(getUserAction(userId))
-            await dispatch(getUserLinksAction(user))
+            !user && await dispatch(getUsersAction());
+            await dispatch(getUserAction(userId));
+            await dispatch(getUserLinksAction(userId));
         }
         fetchUsers();
     }, []);
@@ -69,7 +70,7 @@ const SingleUser = () => {
                     <div >
                         <h1 className='m-5 text-center'>User id: {user.id}</h1>
                         <div className='d-flex justify-content-between align-items-end m-5'>
-                            <div className='d-flex align-items-end'>
+                            <div className='d-flex align-items-end gap-4'>
                                 <img src={user.usersprofile.profilePic} style={{ width: "10em", height: "auto" }} />
                                 <div className='d-flex flex-column'>
                                     <p>Username: {user.username}</p>
@@ -78,24 +79,26 @@ const SingleUser = () => {
                                 </div>
                             </div>
                             <Button color="error" variant="outlined" startIcon={<DeleteIcon />} onClick={handleClickOpen}>
-                                Delete
+                                Delete User
                             </Button>
                             <Dialog
                                 open={open}
                                 onClose={handleClose}
                                 aria-labelledby="alert-dialog-title"
                                 aria-describedby="alert-dialog-description"
+                                maxWidth='sm'
+                                fullWidth={true}
                             >
-                                <DialogTitle id="alert-dialog-title">
+                                <DialogTitle id="alert-dialog-title" className='text-center'>
                                     {"Are you sure you want to delete this user?"}
                                 </DialogTitle>
                                 <DialogActions sx={{ display: "flex", justifyContent: "center" }}>
-                                    <ButtonGroup>
-                                        <Button color="error" variant="outlined" startIcon={<DeleteIcon />} onClick={() => dispatchDeleteUser(user)}>Delete</Button>
-                                        <Button color="primary" variant="outlined" startIcon={<CancelIcon />} onClick={handleClose} autoFocus>
-                                            Cancel
-                                        </Button>
-                                    </ButtonGroup>
+                                    <Button color="primary" variant="outlined" startIcon={<CancelIcon />} onClick={handleClose} autoFocus>
+                                        Cancel
+                                    </Button>
+                                    <Button color="error" variant="outlined" startIcon={<DeleteIcon />} onClick={() => dispatchDeleteUser(user)}>
+                                        Delete
+                                    </Button>
                                 </DialogActions>
                             </Dialog>
                         </div>
@@ -105,23 +108,23 @@ const SingleUser = () => {
                                 <Table aria-label="Links table" stickyHeader sx={{ width: "60em", margin: "auto" }}>
                                     <TableHead>
                                         <TableRow>
-                                            <TableCell >Link</TableCell>
-                                            <TableCell align="right">LinkTypeId</TableCell>
+                                            <TableCell >LinkType</TableCell>
+                                            <TableCell align="middle">Icon</TableCell>
+                                            <TableCell align="right">Link</TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
                                         {user.links && user.links.length ? user.links.map((link, index) => (
-                                            <TableRow>
-                                                <TableCell component="th" scope="row">
+                                            <TableRow key={index}>
+                                                <TableCell component="th" scope="row">{link?.linktype?.type}</TableCell>
+                                                <TableCell component="th" scope="row"><img src={link?.linktype?.icon} style={{ width: "5em", height: "5em" }} /></TableCell>
+                                                <TableCell align="right">
                                                     {link.url}
                                                 </TableCell>
-                                                <TableCell align="right">{link.linkTypeId}</TableCell>
-
                                                 <TableCell align="right">
                                                     <Button color="error" variant="outlined" startIcon={<DeleteIcon />} onClick={() => dispatch(deleteUserLinkAction(user, link))}>
                                                         Delete Link
                                                     </Button>
-
                                                 </TableCell>
                                             </TableRow >
                                         ))

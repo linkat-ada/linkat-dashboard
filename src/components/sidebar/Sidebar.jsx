@@ -1,26 +1,31 @@
 import "./sidebar.scss";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
-import InsertChartIcon from "@mui/icons-material/InsertChart";
-import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
-import SettingsSystemDaydreamOutlinedIcon from "@mui/icons-material/SettingsSystemDaydreamOutlined";
-import PsychologyOutlinedIcon from "@mui/icons-material/PsychologyOutlined";
-import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import { Link } from "react-router-dom";
 import { DarkModeContext } from "../../context/darkModeContext";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { logoutAction } from "../../redux/actions/auth";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import LinkIcon from '@mui/icons-material/Link';
+import { getAdminsAction } from "../../redux/actions/admins";
+
+
+
+const roles = {
+  "user": "User",
+  "admin": "Admin",
+  "superAdmin": "SuperAdmin"
+}
 
 const Sidebar = () => {
   // const { dispatchColor } = useContext(DarkModeContext);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const me = useSelector(state => state.auth.data.admin);
+
   return (
     <div className="sidebar">
       <div className="top">
@@ -58,10 +63,14 @@ const Sidebar = () => {
             </li>
           </Link>
           <p className="title">ME</p>
-          {/* <li>
-            <AccountCircleOutlinedIcon className="icon" />
-            <span>Profile</span>
-          </li> */}
+          {me &&
+            <div className="d-flex flex-column">
+              {/* <img src={me?.usersprofile?.profilePic} style={{ width: "3em", height: "3em" }} /> */}
+              <span><b>Username:</b> {me.username}</span>
+              <span><b>Email: </b>{me.email}</span>
+              <span><b>Role:</b> {roles[me.role.role]}</span>
+            </div>
+          }
           <li
             onClick={async () => {
               await dispatch(logoutAction())
@@ -73,7 +82,7 @@ const Sidebar = () => {
           </li>
         </ul>
       </div>
-    </div>
+    </div >
   );
 };
 

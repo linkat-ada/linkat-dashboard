@@ -26,7 +26,7 @@ export const addLinkTypeAction = (type) => async (dispatch) => {
     };
     await requestApi(data)
         .then((res) => {
-            dispatch({ type: ADD_LINKTYPE, payload: type });
+            dispatch({ type: ADD_LINKTYPE, payload: res?.data });
         })
 };
 
@@ -40,7 +40,7 @@ export const editLinkTypeAction = (linktype, type) => async (dispatch) => {
     };
     await requestApi(data)
         .then((res) => {
-            dispatch({ type: EDIT_LINKTYPE, payload: linktype, type });
+            dispatch({ type: EDIT_LINKTYPE, payload: res?.data });
         })
 };
 
@@ -53,6 +53,6 @@ export const editLinkIconAction = (linktype, formData) => async (dispatch) => {
     };
     await requestApi(data)
         .then((res) => {
-            dispatch({ type: EDIT_LINKICON, payload: linktype });
+            dispatch({ type: EDIT_LINKICON, payload: res?.data });
         })
 };

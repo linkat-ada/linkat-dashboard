@@ -24,7 +24,7 @@ const ListUsers = () => {
 
     useEffect(() => {
         const fetchUsers = async () => {
-            await dispatch(getUsersAction())
+            await dispatch(getUsersAction());
         }
         fetchUsers();
     }, []);

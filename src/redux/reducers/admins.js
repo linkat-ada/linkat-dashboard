@@ -29,7 +29,8 @@ const adminsReducer = (state = initialState, action) => {
         messages
       };
     case CREATE_ADMIN:
-      const tempData = [...state.data, action.payload]
+      console.log("data: ",data)
+      const tempData = [...state.data, data]
       return {
         ...state,
         data: tempData,

@@ -70,23 +70,17 @@ const User = ({ user }) => {
                     onClose={handleClose}
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description"
+                    maxWidth='sm'
+                                fullWidth={true}
                 >
-                    <DialogTitle id="alert-dialog-title">
+                    <DialogTitle id="alert-dialog-title" className='text-center'>
                         {"Are you sure you want to delete this user?"}
                     </DialogTitle>
-                    {/* <DialogContent>
-                        <DialogContentText id="alert-dialog-description">
-                            Let Google help apps determine location. This means sending anonymous
-                            location data to Google, even when no apps are running.
-                        </DialogContentText>
-                    </DialogContent> */}
-                    <DialogActions sx={{display: "flex", justifyContent: "center"}}>
-                        <ButtonGroup>
-                            <Button color="error" variant="outlined" startIcon={<DeleteIcon />} onClick={() => dispatchDeleteUser(user)}>Delete</Button>
-                            <Button color="primary" variant="outlined" startIcon={<CancelIcon />} onClick={handleClose} autoFocus>
-                                Cancel
-                            </Button>
-                        </ButtonGroup>
+                    <DialogActions sx={{ display: "flex", justifyContent: "center" }}>
+                        <Button color="primary" variant="outlined" startIcon={<CancelIcon />} onClick={handleClose} autoFocus>
+                            Cancel
+                        </Button>
+                        <Button color="error" variant="outlined" startIcon={<DeleteIcon />} onClick={() => dispatchDeleteUser(user)}>Delete</Button>
                     </DialogActions>
                 </Dialog>
 

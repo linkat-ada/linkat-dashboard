@@ -33,19 +33,12 @@ const animate = {
 const LoginForm = ({ }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // const location = useLocation();
-  // const from = location.state?.from?.pathname || "/";
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [userData, setUserData] = useState({
     usernameOrEmail: "",
     password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
-
-  // const LoginSchema = Yup.object().shape({
-  //   email: Yup.string().required("Email  or Username is required"),
-  //   password: Yup.string().required("Password is required"),
-  // });
 
   const handleInputChange = (e) => {
     userData[e.target.name] = e.target.value;
@@ -59,39 +52,7 @@ const LoginForm = ({ }) => {
       .catch((e) => console.error(e));
   };
 
-  // const handleOnSignin = async (data) => {
-  //   console.log(data);
-  //   await dispatch(
-  //     signinAction({ usernameOrEmail: data.email, password: data.password })
-  //   )
-  //     .then((res) => {
-  //       console.log("signin action------------- ", res);
-  //     })
-  //     .catch((e) => console.error("-----------", e));
-  // };
-
-  // const formik = useFormik({
-  //   initialValues: {
-  //     email: "",
-  //     password: "",
-  //     remember: true,
-  //   },
-  //   validationSchema: LoginSchema,
-  //   onSubmit: async () => {
-  //     await dispatch(
-  //       signinAction({ usernameOrEmail: formik?.values?.email, password: formik?.values?.password })
-  //     )
-  //       .then((res) => {
-  //         console.log("signin action------------- ", res);
-  //       })
-  //       .catch((e) => console.error("-----------", e));
-  //   },
-  // });
-  // const { errors, touched, values, isSubmitting, handleSubmit, getFieldProps } =
-  //   formik;
-
   return (
-    // <FormikProvider value={formik}>
       <form
         autoComplete="off"
         noValidate
@@ -190,7 +151,6 @@ const LoginForm = ({ }) => {
           </Box>
         </Box>
       </form>
-    // </FormikProvider>
   );
 };
 

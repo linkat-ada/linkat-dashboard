@@ -25,7 +25,6 @@ import LinkType from '../../components/LinkType/LinkType';
 const LinkTypes = () => {
     const dispatch = useDispatch();
     const linktypes = useSelector((state) => state.linktypes.data);
-    console.log("getting linktypes from global state")
 
     const [open, setOpen] = useState(false);
     const [newLinkType, setNewLinkType] = useState("");
@@ -33,6 +32,7 @@ const LinkTypes = () => {
     const handleCreateLinkTypeAction = async (e) => {
         await dispatch(addLinkTypeAction(newLinkType))
             .catch((e) => console.error(e));
+        setOpen(false);
     };
 
     const handleClickOpen = () => {

@@ -27,10 +27,8 @@ const linktypesReducer = (state = initialState, action) => {
         messages
       };
     case ADD_LINKTYPE:
-      console.log("action.payload: ", action.payload)
       const tempData = [...state.data]
-      tempData.push({ type: type })
-      console.log("tempData: ", tempData)
+      tempData.push(data)
       return {
         ...state,
         data: tempData,
@@ -38,11 +36,9 @@ const linktypesReducer = (state = initialState, action) => {
         messages
       }
     case EDIT_LINKTYPE:
-      console.log("action.payload: ", action.payload)
       const tempDataType = [...state.data]
-      const index = tempDataType.findIndex(type => type.id == action.payload.linktype.id)
-      tempDataType[index].type = type;
-      console.log("tempData: ", tempDataType)
+      const index = tempDataType.findIndex(type => type.id == data.id)
+      tempDataType[index].type = data.type;
       return {
         ...state,
         data: tempDataType,
@@ -50,8 +46,14 @@ const linktypesReducer = (state = initialState, action) => {
         messages
       }
     case EDIT_LINKICON:
+      console.log("data: ", data);
+      const tempArray = [...state.data]
+      const tempIndex = tempArray.findIndex(linktype => linktype.id == data.id)
+      tempArray[tempIndex].icon = data.icon;
+      // tempArray.splice(tempIndex, 1, data)
       return {
         ...state,
+        data: tempArray,
         success,
         messages
       }
