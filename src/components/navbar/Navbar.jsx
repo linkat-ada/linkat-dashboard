@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 import { getAdminsAction } from "../../redux/actions/admins";
 
 const Navbar = () => {
-  const me = useSelector(state => state.auth.data.admin);
+  const me = useSelector(state => state?.auth?.data?.admin);
   const { darkMode, dispatch } = useContext(DarkModeContext);
 
   return (
